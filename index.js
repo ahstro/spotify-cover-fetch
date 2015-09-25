@@ -14,19 +14,17 @@ process.on('exit', (code) => {
 })
 
 function getImageData (json) {
-  var images
-  var name
-  if (json.images) {
-    images = json.images
-    name = json.name
-  } else {
-    images = json.album.images
-    name = json.album.name
-  }
-  return { name: name,
-           url: images.reduce((x, y) => {
-             return x.height * x.width > y.height * y.width ? x : y
-           }).url }
+  var images = json.images || json.album.images
+  var name = json.images ? json.name : json.album.name
+
+  var image = images.reduce((x, y) => {
+    return x.height * x.width > y.height * y.width ? x : y
+  })
+
+  name = `${name}-${image.width}x${image.height}`
+
+  return { name: name, url: image.url }
+
 }
 
 function downloadImage (imageUrl, imageName) {
