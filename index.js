@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var https = require('https')
 var fs = require('fs')
 var url = process.argv[2]
