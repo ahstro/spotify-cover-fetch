@@ -41,15 +41,14 @@ function getJson (res) {
   })
 }
 
-// Checks if the supplied string is a valid Spotify URL and returns a
-// corresponding API URL or false.
-//
-// Valid formats:
-// Spotify's internal URLs: spotify:artist:1vCWHaC5f2uS3yhpwWbIA6
-// Spotify's web URLs: https://open.spotify.com/artist/1vCWHaC5f2uS3yhpwWbIA6
+// Check if the supplied string contains a validish Spotify IDs, meaning
+// that it checks for something similar to track:6PVfRMTytzNlq9P1BP3Jl0
+// This will allow usage with all Spotify URLs I'm aware of - play., open.
+// and spotify: - but I recommend the latter because it won't contain any
+// weird characters, hopefully.
 function getApiUrl (str) {
-  if (/^(?:https?\:\/\/open.)?spotify(?::|.com\/)(?:artist|album|track)[:/][A-Za-z0-9]{22}$/.test(str)) {
-    return str.replace(/^.*(artist|album|track)[:/]([A-Za-z0-9]{22})$/, (p0, p1, p2) => {
+  if (/(?:album|artist|track)s?[:/][A-Za-z0-9]{22}/.test(str)) {
+    return str.replace(/^.*(artist|album|track)s?[:/]([A-Za-z0-9]{22})$/, (p0, p1, p2) => {
       return `https://api.spotify.com/v1/${p1}s/${p2}`
     })
   } else {
