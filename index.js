@@ -2,18 +2,6 @@
 
 var https = require('https')
 var fs = require('fs')
-var url = process.argv[2]
-
-// TODO: This is probably bad
-var exitCodes = [
-  'spotify-cover-fetch exited successfully',
-  'You need to supply a Spotify URL',
-  'The supplied string is not a valid Spotify URL'
-]
-
-process.on('exit', (code) => {
-  console.log(exitCodes[code])
-})
 
 function getImageData (json) {
   var images = json.images || json.album.images
@@ -30,7 +18,7 @@ function getImageData (json) {
 }
 
 function downloadImage (imageUrl, imageName) {
-  var outFile = process.argv[3] || imageName + '.jpg'
+  var outFile = imageName + '.jpg'
   var coverFile = fs.createWriteStream(outFile)
   https.get(imageUrl, (res) => {
     res.pipe(coverFile)
@@ -68,14 +56,27 @@ function getApiUrl (str) {
   }
 }
 
-// Exit with error message if no command-line arguments are supplied
-if (!url) process.exit(1)
+function startFetching (url) {
+  var apiUrl = getApiUrl(url)
 
-var apiUrl = getApiUrl(url)
+  // Exit with error message if the URL is invalid
+  if (!apiUrl) {
+    console.log(`'${url}' is not a valid Spotify URL`)
+    return
+  }
 
-// Exit with error message if the command-line arguemnt
-// is not a valid Spotify URL
-if (!apiUrl) process.exit(2)
+  // Commence callback hell
+  https.get(apiUrl, getJson)
+}
 
-// Commence callback hell
-https.get(apiUrl, getJson)
+module.exports = (args) => {
+  // Exit with error message if no URLs are supplied
+  if (args.length <= 0) {
+    console.log('You need to supply a Spotify URL')
+    return
+  }
+
+  var urls = typeof args === 'string' ? [args] : args
+
+  urls.forEach(startFetching)
+}

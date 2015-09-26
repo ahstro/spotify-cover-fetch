@@ -4,7 +4,7 @@
   "description": "Fetche cover art from Spotify",
   "main": "index.js",
   "bin": {
-    "spotify-cover-fetch": "./index.js"
+    "spotify-cover-fetch": "./bin/scf.js"
   },
   "dependencies": {},
   "devDependencies": {},
