@@ -20,6 +20,7 @@ function getImageData (json) {
 function downloadImage (imageUrl, imageName) {
   var outFile = imageName + '.jpg'
   var coverFile = fs.createWriteStream(outFile)
+  console.log(`Downloading '${outFile}'`)
   https.get(imageUrl, (res) => {
     res.pipe(coverFile)
   })
