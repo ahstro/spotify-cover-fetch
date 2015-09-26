@@ -1,7 +1,7 @@
 {
   "name": "spotify-cover-fetch",
-  "version": "0.2.0",
-  "description": "Fetche cover art from Spotify",
+  "version": "0.2.1",
+  "description": "Fetch cover art from Spotify",
   "main": "index.js",
   "bin": {
     "spotify-cover-fetch": "./bin/scf.js"
