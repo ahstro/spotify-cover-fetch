@@ -14,7 +14,6 @@ function getImageData (json) {
   name = `${name}-${image.width}x${image.height}`
 
   return { name: name, url: image.url }
-
 }
 
 function downloadImage (imageUrl, imageName) {

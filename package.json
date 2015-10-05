@@ -7,9 +7,11 @@
     "spotify-cover-fetch": "./bin/scf.js"
   },
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "standard": "^5.3.1"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "standard"
   },
   "repository": {
     "type": "git",
